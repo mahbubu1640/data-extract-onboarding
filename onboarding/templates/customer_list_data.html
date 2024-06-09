@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{%block content%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer List</title>
+    <script>
+        function displayExtractedData(data) {
+            const container = document.createElement('ul');
+            for (const [key, value] of Object.entries(data)) {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${key}: ${value}`;
+                container.appendChild(listItem);
+            }
+            return container;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.extracted-data').forEach(el => {
+                const data = JSON.parse(el.textContent);
+                const container = displayExtractedData(data);
+                el.parentElement.appendChild(container);
+            });
+        });
+    </script>
+</head>
+<body>
+    {% for customer_info in customer_data %}
+        <h2>{{ customer_info.customer.firstname }} {{ customer_info.customer.surname }}</h2>
+        <ul>
+            {% for document in customer_info.documents %}
+                <li>Document: <a href="{{ document.file.url }}">{{ document.file }}</a></li>
+                <li class="extracted-data" style="display: none;">{{ document.extracted_data|safe }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</body>
+</html>
+
+{%endblock%}

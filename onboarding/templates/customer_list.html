@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer List</title>
+</head>
+<body>
+    {%block content%}
+    <h1>Customer List</h1>
+    <ul>
+    {% for customer in customers %}
+        <li>{{ customer.firstname }} {{ customer.surname }}</li>
+    {% endfor %}
+    </ul>
+    {%endblock%}
+</body>
+</html>
